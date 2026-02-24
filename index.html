@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Untuk Kamu ☁️</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #87ceeb, #dff6ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cloud {
+    position: absolute;
+    background: white;
+    border-radius: 50px;
+    opacity: 0.8;
+    animation: moveClouds linear infinite;
+  }
+
+  .cloud::before,
+  .cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+
+  .cloud::before {
+    width: 60px;
+    height: 60px;
+    top: -30px;
+    left: 10px;
+  }
+
+  .cloud::after {
+    width: 80px;
+    height: 80px;
+    top: -40px;
+    right: 15px;
+  }
+
+  @keyframes moveClouds {
+    from { transform: translateX(-200px); }
+    to { transform: translateX(120vw); }
+  }
+
+  .card {
+    background: rgba(255,255,255,0.92);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    max-width: 420px;
+    text-align: center;
+    z-index: 10;
+  }
+
+  h1, p {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s, transform 0.8s;
+    margin: 12px 0;
+  }
+
+  .show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  button {
+    background: #ff5c8a;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- awan -->
+<div class="cloud" style="width:140px;height:50px;top:15%;animation-duration:60s;"></div>
+<div class="cloud" style="width:180px;height:60px;top:35%;animation-duration:80s;"></div>
+<div class="cloud" style="width:120px;height:45px;top:60%;animation-duration:70s;"></div>
+
+<div class="card">
+  <button id="nextBtn">sentuh aku ☁️</button>
+
+  <h1>Selamat pagi ☀️</h1>
+  <p>siapkah menghadapi hari ini?</p>
+  <p>hai, bidadari... semoga hari ini cerah dan lebih baik ya</p>
+  <p>maaf karena sering mengganggu waktumu :(</p>
+  <p>apa lagi hanya untuk urusan rindu</p>
+  <p>abis kamu tu bagi aku kek bunyi kereta api</p>
+  <p><b>cute.. cute.. cuteeee 💙</b></p>
+
+  <audio id="song" src="peak-of-love.mp3" loop></audio>
+</div>
+
+<script>
+  const btn = document.getElementById("nextBtn");
+  const texts = document.querySelectorAll(".card h1, .card p");
+  const song = document.getElementById("song");
+
+  let index = 0;
+  let started = false;
+
+  btn.addEventListener("click", () => {
+    if (!started) {
+      song.play();
+      started = true;
+      btn.innerText = "lanjut ☁️";
+      return;
+    }
+
+    if (index < texts.length) {
+      texts[index].classList.add("show");
+      index++;
+    }
+
+    if (index === texts.length) {
+      btn.innerText = "🤍";
+      btn.disabled = true;
+    }
+  });
+</script>
+
+</body>
+</html>
