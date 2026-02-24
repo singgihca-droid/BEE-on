@@ -16,6 +16,7 @@
     align-items: center;
   }
 
+  /* awan */
   .cloud {
     position: absolute;
     background: white;
@@ -23,29 +24,24 @@
     opacity: 0.8;
     animation: moveClouds linear infinite;
   }
-
-  .cloud::before,
-  .cloud::after {
+  .cloud::before, .cloud::after {
     content: '';
     position: absolute;
     background: white;
     border-radius: 50%;
   }
-
   .cloud::before {
     width: 60px;
     height: 60px;
     top: -30px;
     left: 10px;
   }
-
   .cloud::after {
     width: 80px;
     height: 80px;
     top: -40px;
     right: 15px;
   }
-
   @keyframes moveClouds {
     from { transform: translateX(-200px); }
     to { transform: translateX(120vw); }
@@ -73,6 +69,22 @@
     transform: translateY(0);
   }
 
+  /* TEKS TERAKHIR */
+  .final {
+    font-size: 32px;
+    color: #ff4f8b;
+    text-shadow:
+      0 0 6px #ffd1e3,
+      0 0 12px #ff9dbd,
+      0 0 20px #ff6fa1;
+    animation: glow 1.8s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 6px #ffd1e3; }
+    to { text-shadow: 0 0 22px #ff6fa1; }
+  }
+
   button {
     background: #ff5c8a;
     color: white;
@@ -82,12 +94,31 @@
     font-size: 16px;
     cursor: pointer;
   }
+
+  /* LOVE MELAYANG */
+  .heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp 4s linear forwards;
+    pointer-events: none;
+  }
+
+  @keyframes floatUp {
+    from {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-100vh) scale(1.8);
+      opacity: 0;
+    }
+  }
 </style>
 </head>
 
 <body>
 
-<!-- awan -->
 <div class="cloud" style="width:140px;height:50px;top:15%;animation-duration:60s;"></div>
 <div class="cloud" style="width:180px;height:60px;top:35%;animation-duration:80s;"></div>
 <div class="cloud" style="width:120px;height:45px;top:60%;animation-duration:70s;"></div>
@@ -102,6 +133,7 @@
   <p>apa lagi hanya untuk urusan rindu</p>
   <p>abis kamu tu bagi aku kek bunyi kereta api</p>
   <p><b>cute.. cute.. cuteeee 💙</b></p>
+  <p class="final"><b>FIGHTING ADE BERLIANA 💪🐣🌈✨</b></p>
 
   <audio id="song" src="peak-of-love.mp3" loop></audio>
 </div>
@@ -114,6 +146,16 @@
   let index = 0;
   let started = false;
 
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (16 + Math.random() * 20) + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+  }
+
   btn.addEventListener("click", () => {
     if (!started) {
       song.play();
@@ -124,6 +166,17 @@
 
     if (index < texts.length) {
       texts[index].classList.add("show");
+
+      // kalau teks terakhir → munculin love
+      if (texts[index].classList.contains("final")) {
+        let count = 0;
+        const interval = setInterval(() => {
+          createHeart();
+          count++;
+          if (count > 20) clearInterval(interval);
+        }, 200);
+      }
+
       index++;
     }
 
